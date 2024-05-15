@@ -150,6 +150,10 @@ FlowProviderProps<TFlows>) => {
 
 	const handleDispatch = React.useCallback(
 		(screen: TScreen, name: string, payload?: Record<string, any>) => {
+			let resultData = flow.current?.dispatch(screen, name, payload)
+			if(!resultData) {
+				return false;
+			}
 			const {
 				changed,
 				currentFlowName: actionFlowName,
@@ -157,7 +161,7 @@ FlowProviderProps<TFlows>) => {
 				historyUrl,
 				clearHistory,
 				ignoreHistory,
-			} = flow.current?.dispatch(screen, name, payload) || {};
+			} = resultData || {};
 
 			logger.log('FlowProvider > dispatch', { name, payload, changed });
 

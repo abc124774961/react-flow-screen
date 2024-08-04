@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLoggerFlow } from '../../hooks';
 import { FlowManager } from '../../models';
 import { Flow } from '../../models/flow';
@@ -11,6 +11,15 @@ import {
 	TScreen,
 } from '../../types';
 
+
+
+export interface IFlowState{
+	flowKey:string
+	paramKeyName:string
+}
+// this.flowState={}
+// this.flowState.flowKey = generateRandomString(10)
+// this.flowState.paramKeyName = this.name;
 export const flowManagerContext = React.createContext<TFlowManagerContext>({
 	fm: undefined,
 	currentFlowName: '',
@@ -47,9 +56,13 @@ interface FlowProviderProps<TFlows extends TDictionary> {
 	onFlowUnmount?: FlowProviderLifeCycleHandlers<Partial<TFlows>>;
 	children?: React.ReactNode;
 	listen?: (input: TFlowListenCallbackInput) => void;
+	flowKey?:string
+	paramKeyName?:string
 }
 
 export const FlowProvider = <TFlows extends TDictionary>({
+	flowKey,
+	paramKeyName,
 	fm,
 	initialFlowName,
 	children,
@@ -63,6 +76,8 @@ FlowProviderProps<TFlows>) => {
 	const [_, setForceUpdate] = React.useState(0);
 	const currentFlowName = React.useRef<string>(initialFlowName as string);
 	const flow = React.useRef<Flow>(fm.getFlow(currentFlowName.current as string));
+	const [flowState,setFlowState]=useState<IFlowState>({flowKey:flowKey??generateRandomString(10),paramKeyName:paramKeyName??'key'})
+	
 	const logger = useLoggerFlow();
 	const initialized = React.useRef(false);
 	const { animation = DEFAULT_FLOW_MANAGER_OPTIONS.animation, withUrl = DEFAULT_FLOW_MANAGER_OPTIONS.withUrl } =
@@ -212,6 +227,7 @@ FlowProviderProps<TFlows>) => {
 
 	const flowManagerContextValue = React.useMemo(
 		() => ({
+			flowState,
 			fm,
 			currentFlowName: flow.current?.name,
 			start: handleStart,
@@ -220,7 +236,7 @@ FlowProviderProps<TFlows>) => {
 			refresh: handleRefresh,
 			options: parsedOptions,
 		}),
-		[fm, handleBack, handleDispatch, handleRefresh, handleStart, parsedOptions]
+		[fm,flowState, handleBack, handleDispatch, handleRefresh, handleStart, parsedOptions]
 	);
 
 	React.useEffect(() => {
@@ -240,6 +256,10 @@ FlowProviderProps<TFlows>) => {
 		}
 	}, [_, fm, onFlowMount, onFlowUnmount]);
 
+	useEffect(()=>{
+		setFlowState({ flowKey, paramKeyName})
+	},[flowKey,paramKeyName])
+
 	logger.log('FlowProvider', {
 		flow: flow.current,
 		currentFlowName: currentFlowName.current,
@@ -252,3 +272,15 @@ FlowProviderProps<TFlows>) => {
 		</flowManagerContext.Provider>
 	);
 };
+
+
+
+export function generateRandomString(length: number) {
+	const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+	const charactersLength = characters.length
+	let result = ''
+	for (let i = 0; i < length; i++) {
+	  result += characters.charAt(Math.floor(Math.random() * charactersLength))
+	}
+	return result
+  }

@@ -35,6 +35,7 @@ export const flowManagerContext = React.createContext<TFlowManagerContext>({
 	dispatch: (screen: TScreen, name: string, payload?: Record<string, any>): void => {},
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	refresh: (): void => {},
+	flowState:IFlowState,
 });
 
 export type FlowProviderLifeCycleHandlers<TFlows> = Partial<Record<keyof TFlows, () => void>>;

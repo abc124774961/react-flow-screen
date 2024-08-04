@@ -30,7 +30,7 @@ export const useFlow = <TScreenInner extends TScreen>(screen?: TScreenInner) => 
 
 	const clearHistory = React.useCallback(flow?.clearHistory || ((): void => emptyFn()), [flow]);
 
-	const getCurrentFlow = React.useCallback(()=>flow || ((): void => emptyFn()), [flow]);
+	const getCurrentFlow = React.useCallback(flow || ((): void => emptyFn()), [flow]);
 
 	return React.useMemo(
 		() => ({

@@ -20,6 +20,12 @@ import {
 } from '../../types';
 import { Step } from '../step';
 
+
+export interface IFlowState{
+	flowKey:string
+	paramKeyName:string
+}
+
 export class Flow {
 	name: string;
 	baseUrl: string;
@@ -32,6 +38,7 @@ export class Flow {
 	initialStepName?: string;
 	lastRenderStepName?: string;
 	lastAction?: TFlowLastAction;
+	currentFlowState?: IFlowState
 
 	constructor(name: string, baseUrl: string) {
 		this.name = name;
@@ -46,6 +53,8 @@ export class Flow {
 			dispatch: [],
 			mount: [],
 		};
+		this.currentFlowState.flowKey = generateRandomString(10)
+		this.currentFlowState.paramKeyName = this.name;
 	}
 
 	private get stepsArray(): string[] {
@@ -452,3 +461,14 @@ export class Flow {
 		};
 	};
 }
+
+
+export function generateRandomString(length: number) {
+	const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+	const charactersLength = characters.length
+	let result = ''
+	for (let i = 0; i < length; i++) {
+	  result += characters.charAt(Math.floor(Math.random() * charactersLength))
+	}
+	return result
+  }

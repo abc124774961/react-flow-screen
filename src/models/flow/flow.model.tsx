@@ -53,6 +53,7 @@ export class Flow {
 			dispatch: [],
 			mount: [],
 		};
+		this.currentFlowState={}
 		this.currentFlowState.flowKey = generateRandomString(10)
 		this.currentFlowState.paramKeyName = this.name;
 	}

@@ -38,7 +38,7 @@ export class Flow {
 	initialStepName?: string;
 	lastRenderStepName?: string;
 	lastAction?: TFlowLastAction;
-	currentFlowState?: IFlowState
+	flowState?: IFlowState
 
 	constructor(name: string, baseUrl: string) {
 		this.name = name;
@@ -53,9 +53,9 @@ export class Flow {
 			dispatch: [],
 			mount: [],
 		};
-		this.currentFlowState={}
-		this.currentFlowState.flowKey = generateRandomString(10)
-		this.currentFlowState.paramKeyName = this.name;
+		this.flowState={}
+		this.flowState.flowKey = generateRandomString(10)
+		this.flowState.paramKeyName = this.name;
 	}
 
 	private get stepsArray(): string[] {

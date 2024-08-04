@@ -66,7 +66,7 @@ export const useFlow = <TScreenInner extends TScreen>(screen?: TScreenInner) => 
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const useFlowManager = () => {
-	const { currentFlowName, start, fm } = React.useContext(flowManagerContext);
+	const { currentFlowName, start, fm ,flowState} = React.useContext(flowManagerContext);
 
 	const handleStart = React.useCallback(
 		({ flowName, stepName, options }: TFlowManagerStartMethodInput): void => {
@@ -77,10 +77,11 @@ export const useFlowManager = () => {
 
 	return React.useMemo(
 		() => ({
+			flowState,
 			currentFlowName,
 			start: handleStart,
 			clearAllHistory: fm.clearAllHistory,
 		}),
-		[currentFlowName, fm.clearAllHistory, handleStart]
+		[currentFlowName,flowState, fm.clearAllHistory, handleStart]
 	);
 };

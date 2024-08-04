@@ -12,11 +12,7 @@ import {
 } from '../../types';
 
 
-
-export interface IFlowState{
-	flowKey:string
-	paramKeyName:string
-}
+ 
 // this.flowState={}
 // this.flowState.flowKey = generateRandomString(10)
 // this.flowState.paramKeyName = this.name;
@@ -35,7 +31,7 @@ export const flowManagerContext = React.createContext<TFlowManagerContext>({
 	dispatch: (screen: TScreen, name: string, payload?: Record<string, any>): void => {},
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	refresh: (): void => {},
-	flowState:IFlowState,
+	flowState: {} as any,
 });
 
 export type FlowProviderLifeCycleHandlers<TFlows> = Partial<Record<keyof TFlows, () => void>>;

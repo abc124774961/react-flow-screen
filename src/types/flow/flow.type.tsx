@@ -45,6 +45,12 @@ export const DEFAULT_FLOW_MANAGER_OPTIONS: TFlowManagerOptions = {
 	withUrl: true,
 };
 
+
+export interface IFlowState{
+	flowKey:string
+	paramKeyName:string
+}
+
 export type TFlowManagerContext = {
 	fm: FlowManager<any, any, any, any>;
 	currentFlowName: string;
@@ -53,6 +59,7 @@ export type TFlowManagerContext = {
 	back: () => void;
 	dispatch: (screen: TScreen, name: string, payload?: TFlowActionPayload) => void;
 	refresh: () => void;
+	flowState: IFlowState
 };
 
 export type TStepAction = string | (() => void);

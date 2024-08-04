@@ -35,6 +35,7 @@ export const useFlow = <TScreenInner extends TScreen>(screen?: TScreenInner) => 
 			back: (): void => {
 				back?.();
 			},
+			flow,
 			clearHistory,
 			dispatch: handleDispatch,
 			getCurrentStep,
@@ -48,6 +49,7 @@ export const useFlow = <TScreenInner extends TScreen>(screen?: TScreenInner) => 
 		}),
 		[
 			back,
+			flow,
 			clearHistory,
 			getCurrentStep,
 			getHistory,

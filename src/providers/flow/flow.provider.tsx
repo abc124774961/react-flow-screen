@@ -73,7 +73,7 @@ FlowProviderProps<TFlows>) => {
 	const [_, setForceUpdate] = React.useState(0);
 	const currentFlowName = React.useRef<string>(initialFlowName as string);
 	const flow = React.useRef<Flow>(fm.getFlow(currentFlowName.current as string));
-	const [flowState,setFlowState]=useState<IFlowState>({flowKey:flowKey??generateRandomString(10),paramKeyName:paramKeyName??'key'})
+	const [flowState,setFlowState]=useState({flowKey:flowKey??generateRandomString(10),paramKeyName:paramKeyName??'key'})
 	
 	const logger = useLoggerFlow();
 	const initialized = React.useRef(false);

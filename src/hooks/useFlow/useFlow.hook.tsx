@@ -77,11 +77,12 @@ export const useFlowManager = () => {
 
 	return React.useMemo(
 		() => ({
+			fm,
 			flowState,
 			currentFlowName,
 			start: handleStart,
 			clearAllHistory: fm.clearAllHistory,
 		}),
-		[currentFlowName,flowState, fm.clearAllHistory, handleStart]
+		[currentFlowName,flowState,fm, fm.clearAllHistory, handleStart]
 	);
 };

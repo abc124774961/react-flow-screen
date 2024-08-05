@@ -1,6 +1,6 @@
 {
 	"name": "react-flow-screen",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"description": "🚀 This is a React.js library to simplify navigations focused in events (user actions) for smooth integrations.",
 	"main": "src/index.ts",
 	"private": true,

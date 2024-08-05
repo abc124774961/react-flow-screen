@@ -146,7 +146,7 @@ export type TFlowScreenActionCallbackResult = {
 };
 
 export type TFlowManagerStartMethodInput = {
-	flowName: string;
+	flowName?: string;
 	stepName?: string;
 	options?: TFlowActionOptions;
 };

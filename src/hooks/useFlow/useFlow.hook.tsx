@@ -69,7 +69,7 @@ export const useFlowManager = () => {
 	const { currentFlowName, start, fm ,flowState} = React.useContext(flowManagerContext);
 
 	const handleStart = React.useCallback(
-		({ flowName, stepName, options }: TFlowManagerStartMethodInput): void => {
+		({ flowName = currentFlowName, stepName, options }: TFlowManagerStartMethodInput): void => {
 			start(flowName, stepName, options);
 		},
 		[start]

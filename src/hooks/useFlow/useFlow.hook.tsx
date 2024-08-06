@@ -13,7 +13,8 @@ export const useFlow = <TScreenInner extends TScreen>(screen?: TScreenInner) => 
 
 	const handleDispatch = React.useCallback(
 		(name: TScreenInner['actions'][number], payload?: Record<string, any>): void => {
-			dispatch(screen, name, payload);
+			let _screen = screen ?? fm.screens[getCurrentStep().name];
+			dispatch(_screen, name, payload);
 		},
 		[dispatch, screen]
 	);
@@ -30,14 +31,12 @@ export const useFlow = <TScreenInner extends TScreen>(screen?: TScreenInner) => 
 
 	const clearHistory = React.useCallback(flow?.clearHistory || ((): void => emptyFn()), [flow]);
 
-	
-
 	return React.useMemo(
 		() => ({
 			back: (): void => {
 				back?.();
 			},
-			currentFlow:flow,
+			currentFlow: flow,
 			clearHistory,
 			dispatch: handleDispatch,
 			getCurrentStep,
@@ -66,7 +65,7 @@ export const useFlow = <TScreenInner extends TScreen>(screen?: TScreenInner) => 
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const useFlowManager = () => {
-	const { currentFlowName, start, fm ,flowState} = React.useContext(flowManagerContext);
+	const { currentFlowName, start, fm, flowState } = React.useContext(flowManagerContext);
 
 	const handleStart = React.useCallback(
 		({ flowName = currentFlowName, stepName, options }: TFlowManagerStartMethodInput): void => {
@@ -83,6 +82,6 @@ export const useFlowManager = () => {
 			start: handleStart,
 			clearAllHistory: fm.clearAllHistory,
 		}),
-		[currentFlowName,flowState,fm, fm.clearAllHistory, handleStart]
+		[currentFlowName, flowState, fm, fm.clearAllHistory, handleStart]
 	);
 };

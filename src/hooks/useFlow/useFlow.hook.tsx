@@ -31,8 +31,23 @@ export const useFlow = <TScreenInner extends TScreen>(screen?: TScreenInner) => 
 
 	const clearHistory = React.useCallback(flow?.clearHistory || ((): void => emptyFn()), [flow]);
 
+	const navigate = React.useCallback(
+		((stepName: string, options?: { replace?: boolean; flowName?: string }) => {
+			if (stepName && flow.steps[stepName]) {
+				if (options?.replace == true) {
+				} else {
+					flow.treatHistory(stepName);
+				}
+				flow.start(stepName, options.flowName);
+				refresh();
+			}
+		}) || ((): void => emptyFn()),
+		[flow, refresh]
+	);
+
 	return React.useMemo(
 		() => ({
+			navigate: navigate,
 			back: (): void => {
 				back?.();
 			},
@@ -49,6 +64,7 @@ export const useFlow = <TScreenInner extends TScreen>(screen?: TScreenInner) => 
 			},
 		}),
 		[
+			navigate,
 			back,
 			flow,
 			clearHistory,

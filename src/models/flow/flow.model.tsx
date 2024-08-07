@@ -310,7 +310,7 @@ export class Flow {
 	};
 
 	// eslint-disable-next-line sonarjs/cognitive-complexity
-	private treatHistory = (nextStepName: string): void => {
+	treatHistory = (nextStepName: string): void => {
 		if (this.currentStepName) {
 			const currentStep = this.steps[this.currentStepName];
 
